@@ -1,0 +1,11 @@
+<!--  header text-->
+@if (headerTitle$| async; as headerTitle) {
+  <div class="row pe-5">
+    <div class="col-md-4"><h3 class="text-primary">{{ headerTitle | titlecase }}</h3></div>
+    <div class="col-md-8 text-end"></div>
+  </div>
+} @else () {
+  <div class="placeholder-glow">
+    <span class="placeholder col-12"></span>
+  </div>
+}

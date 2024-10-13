@@ -1,0 +1,17 @@
+<div class="mb-3 mt-3 row">
+  <div class="col-md-6 d-none d-md-block">
+    <label for="itemsPerRow" class="me-2">Items per row:</label>
+    <div id="itemsPerRow" class="btn-group" role="group" aria-label="Grid size selection">
+      @for (option of rowOptions; track $index) {
+        <button type="button" class="btn"
+                [ngClass]="{'btn-primary': itemsPerRow() === option, 'btn-outline-primary': itemsPerRow() !== option}"
+                (click)="updateGridSize(option)">
+          <span>{{ option }}</span>
+        </button>
+      }
+    </div>
+  </div>
+  <div class="col-12 col-md-6 text-end">
+    <button routerLink="/todos/create"  class="btn btn-success ms-2">Create New Todo</button>
+  </div>
+</div>

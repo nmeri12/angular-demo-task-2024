@@ -1,0 +1,16 @@
+<!--app header-->
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="'.'">Demo App</a>
+    <button class="navbar-toggler" type="button"  (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <!-- Routs list -->
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="'/users'" (click)="isMenuCollapsed = true">Users</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+

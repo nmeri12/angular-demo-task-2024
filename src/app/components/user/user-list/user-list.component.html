@@ -1,0 +1,66 @@
+<!--      content-->
+@if (users$ |async; as users) {
+
+  <!-- custom filter -->
+  <div class="input-group mb-3">
+    <input [(ngModel)]="searchText" type="text" class="form-control"
+           placeholder="Filter by Name, Username, Email, or Company name ... ">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="bi bi-search"></i></span>
+    </div>
+  </div>
+  <table class="table table-responsive table-striped">
+    <thead>
+    <!--      headers-->
+    <tr>
+      @for (header of headers; track $index) {
+        <th scope="col">{{ header|uppercase }}</th>
+      }
+    </tr>
+    </thead>
+    <tbody>
+
+    <!--      @for (user of users; track user.id) {-->
+      @for (user of (users | customFilter: searchText); track user.id) {
+        <tr>
+          <th scope="row">{{ user.id }}</th>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="avatar bg-success text-white d-flex align-items-center justify-content-center rounded-circle">
+                {{ user.name | initials }}
+              </div>
+              <span class="ms-2">{{ user.name }}</span>
+            </div>
+          </td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+          <td class="text-center">
+            <!--          Action buttons ( view usr info | view user todos |delete user )-->
+            <div class="btn-group" role="group" aria-label="User Actions">
+              <!--              view user info-->
+              <button (click)="onViewUser(user.id)" placement="bottom" ngbTooltip="View"
+                      class="btn btn-outline-primary">
+                <i class="bi bi-eye"></i>
+              </button>
+              <!--              view user todos-->
+              <button [routerLink]="[user.id, 'todos']" placement="bottom" ngbTooltip="Todos list"
+                      class="btn btn-outline-secondary">
+                <i class="bi bi-grid"></i>
+              </button>
+              <!--              delete button-->
+              <button (click)="onDelete(user.id)" placement="bottom" ngbTooltip="Delete" class="btn btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+
+          </td>
+        </tr>
+      } @empty {
+        <div class="pe-3"><p> No users found!</p></div>
+      }
+    </tbody>
+  </table>
+} @else () {
+  <app-loading></app-loading>
+}

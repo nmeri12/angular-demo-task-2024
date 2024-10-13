@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, input, output, signal} from '@angular/core';
 import {NgClass} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {Constants} from '../../../core/utils/Constants';
@@ -17,7 +17,7 @@ export class TodoToolbarComponent {
 
   public itemsPerRow = input.required<number>(); // Default items per row
   public gridSizeChange = output<number>();
-  public rowOptions: number[] = Constants.ROW_OPTIONS;  // Items per row options
+  public rowOptions = signal(Constants.ROW_OPTIONS);  // Items per row options
 
   /**
    * Emit items per row

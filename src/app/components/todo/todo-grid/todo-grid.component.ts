@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {Todo} from '../../../core/model/todo.model';
 import {AsyncPipe, JsonPipe, NgClass} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
@@ -30,7 +30,7 @@ import {Constants} from '../../../core/utils/Constants';
 })
 export class TodoGridComponent implements OnInit {
   public todList$: Observable<Todo[]>;
-  public columnsPerRow = Constants.DEFAULT_ITEMS_PER_ROW;
+  public columnsPerRow = signal(Constants.DEFAULT_ITEMS_PER_ROW);
 
   private _route = inject(ActivatedRoute);
   private _appService = inject(AppService);
@@ -75,7 +75,7 @@ export class TodoGridComponent implements OnInit {
    * Update the number of items per row
    */
   updateGridSize(option: number): void {
-    this.columnsPerRow = option;
+    this.columnsPerRow.set(option);
   }
 
   /**

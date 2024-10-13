@@ -5,7 +5,7 @@ import {AlertService} from './alert.service';
 @Injectable()
 export class GlobalErrorHandlerService implements ErrorHandler {
 
-  private _alertService=inject(AlertService);
+  private _alertService = inject(AlertService);
 
   handleError(error: any) {
     // Check if it's an error from an HTTP response
@@ -14,7 +14,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     }
 
     //display err massage
-    this._alertService.dialog(error,'Error found, please try again later')
+    this._alertService.dialog(error, 'Error found, please try again later')
     console.error('Error found, please try again later', error);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {AppService} from '../../../core/services/app.service';
 import {FormsModule} from '@angular/forms';
 import {NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
@@ -17,8 +17,8 @@ import {TodoService} from '../../../core/services/todo.service';
 })
 export class TodoCreateComponent implements OnInit {
 
-  public title: string = ''; //task title
-  public loading = false;
+  public title = signal('');
+  public loading = signal(false);
 
   //inject services
   private _appService = inject(AppService);
@@ -33,18 +33,18 @@ export class TodoCreateComponent implements OnInit {
    * add new task
    */
   onSubmit() {
-    const trimmedTitle = this.title.trim();
+    const trimmedTitle = this.title().trim();
     if (!trimmedTitle) {
       this._alertService.toast('Please type a title!', 'error');
       return;
     } else {
-      this.loading = true;
+      this.loading.set(true);
       this._todoService.createTodo(trimmedTitle).subscribe(
         value => {
           if (value) {
-            this.title = ''; //Reset task title
+            this.title.set(''); //Reset task title
             this._alertService.toast('Todo was created!', 'success')
-            this.loading = false;
+            this.loading.set(false);
           }
         })
     }

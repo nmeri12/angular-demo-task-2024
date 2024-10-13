@@ -16,9 +16,9 @@
         type="text"
         formControlName="title"
         class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f['title'].errors }"
+        [ngClass]="{ 'is-invalid': submitted() && f['title'].errors }"
       />
-      @if (submitted && f['title'].errors?.['required']) {
+      @if (submitted() && f['title'].errors?.['required']) {
         <div class="invalid-feedback">
           <div>Title is required</div>
         </div>
@@ -31,8 +31,8 @@
     </div>
 
     <div class="form-group pt-3">
-      <button [disabled]="loading" class="btn btn-primary" type="submit" disabled>
-        @if (loading) {
+      <button [disabled]="loading()" class="btn btn-primary" type="submit" disabled>
+        @if (loading()) {
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         }
         Submit

@@ -21,7 +21,7 @@
     <tbody>
 
     <!--      @for (user of users; track user.id) {-->
-      @for (user of (users | customFilter: searchText); track user.id) {
+      @for (user of (users | customFilter: searchText()); track user.id) {
         <tr>
           <th scope="row">{{ user.id }}</th>
           <td>

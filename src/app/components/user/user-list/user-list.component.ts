@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {AsyncPipe, CommonModule, UpperCasePipe} from '@angular/common';
 import {UserService} from '../../../core/services/user.service';
 import {Observable} from 'rxjs';
@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
 
   public users$: Observable<User[]>;
   public headers: string[] = USER_TABLE_HEADERS;
-  public searchText: string = '';
+  public searchText=signal('');
 
   private _userService = inject(UserService);
   private _appService = inject(AppService);

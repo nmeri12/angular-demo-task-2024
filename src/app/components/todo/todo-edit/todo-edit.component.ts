@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AsyncPipe, CommonModule} from '@angular/common';
 import {LoadingComponent} from '../../../core/components/loading/loading.component';
@@ -23,9 +23,9 @@ import {Todo} from '../../../core/model/todo.model';
 })
 export class TodoEditComponent implements OnInit {
   public todo$: Observable<Todo>;
-  public form:  FormGroup ;
-  public submitted = false;
-  public loading = false;
+  public form: FormGroup;
+  public submitted = signal(false);
+  public loading = signal(false);
 
   private _route = inject(ActivatedRoute);
   private _appService = inject(AppService);
@@ -46,8 +46,8 @@ export class TodoEditComponent implements OnInit {
   private initializeForm(): void {
     this.form = this._fb.group({
       title: ['', Validators.required],
-      id: [{ value: '', disabled: true }],
-      userId: [{ value: '', disabled: true }],
+      id: [{value: '', disabled: true}],
+      userId: [{value: '', disabled: true}],
       completed: [false]
     });
   }
@@ -92,18 +92,18 @@ export class TodoEditComponent implements OnInit {
    * edit task and navigate to user todos list
    */
   onSubmit(): void {
-    this.submitted = true;
+    this.submitted.set(true);
 
     if (this.form.invalid) {
       return;
     }
-    this.loading = true;
+    this.loading.set(true);
     const updatedTodo: Todo = {...this.form.getRawValue(), id: this.form.get('id')!.value};
     this._todoService.updateTodo(updatedTodo).subscribe(value => {
       const userID = this.form.get('userId')!.value;
       if (userID && value) {
         this._alertService.toast('Todo was updated!', 'success');
-        this.loading = false;
+        this.loading.set(false);
         this._router.navigate([`/users/${userID}/todos`]);
       }
     });
